@@ -1,21 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
+
+// navigation
+import AppNavigator from './src/navigation/AppNavigator';
+
+// redux imports
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
 export default function App() {
+
+  const [loaded] = useFonts({
+    MontReg: require('./assets/fonts/Montserrat-Regular.ttf'),
+    MontMed: require('./assets/fonts/Montserrat-Medium.ttf'),
+    MontSemiBold: require('./assets/fonts/Montserrat-SemiBold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
